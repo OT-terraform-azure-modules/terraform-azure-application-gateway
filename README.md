@@ -41,7 +41,7 @@ Tags
 ----
 * Tags are assigned to resources with name variable as prefix.
 * Additial tags can be assigned by tags variables as defined above.
-* Testing this.
+
 
 Resources
 ------
@@ -52,6 +52,7 @@ Resources
 | [azurerm_subnet.agw_subnet](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet) | resource |
 | [azurerm_network_security_group.agw_nsg](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_security_group) | resource |
 | [azurerm_subnet_network_security_group_association.agw_nsg](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet_network_security_group_association) | resource |
+
 
 Inputs
 ------
@@ -72,6 +73,7 @@ Inputs
 | public_ip_allocation_method | Allocation method for the public IP | `string` | `"Dynamic"` | no |
 | agw_security_rule | Please mention the security rules here | `string` |  | yes |
 
+
 Output
 ------
 | Name | Description |
@@ -80,12 +82,14 @@ Output
 | agw_subnet_id | ID of the Subnet created with Application Gateway |
 | nsg_id | ID of the Network Security Group created with Application Gateway |
 
+
 ## Related Projects
 
 Check out these related projects.
 
 * [Resource Group](https://gitlab.com/ot-azure/terraform/rg)
 * [Virtual Network](https://gitlab.com/ot-azure/terraform/virtual_network)
+
 
 ### Contributor
 
