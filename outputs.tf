@@ -13,3 +13,7 @@ output "nsg_id" {
   description = "ID of the Network Security Group of Application Gateway"
 }
 
+output  backend_address_pool_id {
+  value       = azurerm_application_gateway.agw.request_routing_rule[*].backend_address_pool_id
+  description = "The id of aap_gw_backend"
+}
