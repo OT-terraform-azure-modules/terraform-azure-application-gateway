@@ -68,3 +68,9 @@ variable "agw_security_rule" {
   type = list(map(string))
   description = "Please mention the security rules here."
 }
+
+variable "pip_sku" {
+  type        = string
+  description = "(Optional) The SKU of the Public IP. Accepted values are Basic and Standard. Defaults to Basic."
+  default     = "Basic"
+}
