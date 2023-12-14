@@ -17,3 +17,8 @@ output  backend_address_pool_id {
   value       = azurerm_application_gateway.agw.request_routing_rule[*].backend_address_pool_id
   description = "The id of aap_gw_backend"
 }
+
+
+output "agw_pubip" {
+  value = azurerm_public_ip.pip.ip_address
+}

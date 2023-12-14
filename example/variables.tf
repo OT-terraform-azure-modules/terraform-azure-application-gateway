@@ -1,9 +1,15 @@
+#----------------------------  app gw -------------------------------------------------
+
 variable "agw_name" {
   default = "buildpiper-agwnew"
 }
 
-variable "agw_ip_name" {
-  default = "agw-ip"
+variable "agw_pubip_name" {
+  default = "agw-pub-ip"
+}
+
+variable "agw_nsg_name" {
+  default = "agw-nsg-name"
 }
 
 variable "agw_subnet_name" {
@@ -12,6 +18,18 @@ variable "agw_subnet_name" {
 
 variable "agw_address_prefix" {
   default = ["192.168.2.0/24"]
+}
+
+variable "public_ip_allocation_method" {
+  type        = string
+  description = "Type of PUBLIC IP will get allocated"
+  default     = "Dynamic"
+}
+
+variable "pip_sku" {
+  type        = string
+  description = "(Optional) The SKU of the Public IP. Accepted values are Basic and Standard. Defaults to Basic."
+  default     = "Basic"
 }
 
 variable "agw_security_rule" {
@@ -58,7 +76,7 @@ variable "agw_frontend_port" {
   }]
 }
 
-variable "agw_backend_address_pool" {
+variable "backend_address_pool" {
   type        = any
   description = "List of Backend Address Pool"
   default = [{
@@ -174,8 +192,68 @@ variable "agw_request_routing_rule" {
   }]
 }
 
+variable "waf_configuration" {
+  description = "Web Application Firewall support for your Azure Application Gateway"
+  type = object({
+    firewall_mode            = string
+    rule_set_version         = string
+    file_upload_limit_mb     = optional(number)
+    request_body_check       = optional(bool)
+    max_request_body_size_kb = optional(number)
+    disabled_rule_group = list(object({
+      rule_group_name = string
+      rules           = list(string)
+    }))
+    exclusion = list(object({
+      match_variable          = string
+      selector_match_operator = string
+      selector                = string
+    }))
+  })
+  default = null
+}
+
+variable "probes" {
+  type = list(object({
+    name                                      = string
+    protocol                                  = string
+    host                                      = string
+    path                                      = string
+    port                                      = number
+    pick_host_name_from_backend_http_settings = bool
+    interval                                  = number
+    timeout                                   = number
+    unhealthy_threshold                       = number
+    match_status_code                         = list(string)
+  }))
+}
+
+variable "redirect_configuration" {
+  description = "list of maps for redirect configurations"
+  type        = list(map(string))
+  default     = []
+}
+
+variable "ssl_certificates" {
+  description = "List of SSL certificates data for Application gateway"
+  type = list(object({
+    name                = string
+    data                = optional(string)
+    password            = optional(string)
+    key_vault_secret_id = optional(string)
+  }))
+  default = []
+}
+
+
 variable "tag_map" {
   default = {
     Creator = "Mehul Sharma"
   }
+}
+
+variable "use_waf_policy" {
+  type        = bool
+  description = "(optional) Enable it if want to use waf policy with Appp Gw."
+  default     = false
 }
